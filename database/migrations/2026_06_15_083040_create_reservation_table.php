@@ -16,8 +16,8 @@ return new class extends Migration
 
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->date('start_datetime');
-            $table->date('end_datetime');
+            $table->timestamp('start_datetime');
+            $table->timestamp('end_datetime');
             $table->enum('status',['pending' , 'confirmed' , 'cancelled'])->default('pending');
             $table->text('notes');
             $table->foreignIdFor(Room::class)->constrained()->cascadeOnDelete();
