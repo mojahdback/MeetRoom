@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Building\storeBuildingRequest;
-use App\Http\Requests\updateBuildingRequest;
+use App\Http\Requests\Building\updateBuildingRequest;
 use App\Models\Building;
+use App\Models\Room;
 
 
 class BuildingController extends Controller
@@ -15,8 +16,8 @@ class BuildingController extends Controller
      */
     public function index()
     {
-        $buildings = Building::all(); 
-        return view('buildings.index', compact('buildings') );   
+        $buildings = Building::all();
+        return view('admin.buildings.index', compact('buildings'));
     }
 
     /**
@@ -24,7 +25,7 @@ class BuildingController extends Controller
      */
     public function create()
     {
-       return view('buildings.create');
+        return view('admin.buildings.create');
     }
 
     /**
@@ -34,12 +35,13 @@ class BuildingController extends Controller
     {
         Building::create([
             'name' => $request->name,
-            'address' => $request->address ,
+            'address' => $request->address,
             'floors_count' => $request->floors_count,
             'is_active' => $request->is_active,
         ]);
 
-        return redirect()->route('buildings.index');
+
+        return redirect()->route('admin.buildings.index');
     }
 
     /**
@@ -48,16 +50,16 @@ class BuildingController extends Controller
     public function show(string $id)
     {
         $building = Building::findOrFail($id);
-        return view('buildings.show', compact('building') );
+        return view('admin.buildings.show', compact('building'));
     }
 
     public function edit(string $id)
     {
         $building = Building::findOrFail($id);
-        return view('buildings.edit', compact('building') );
+        return view('admin.buildings.edit', compact('building'));
     }
 
-    
+
 
     /**
      * Update the specified resource in storage.
@@ -67,24 +69,41 @@ class BuildingController extends Controller
         $building = Building::findOrFail($id);
         $building->update([
             'name' => $request->name,
-            'address' => $request->address ,
+            'address' => $request->address,
             'floors_count' => $request->floors_count,
-            'is_active' => $request->is_active,
+            'is_active' => $request->is_active??false,
         ]);
 
-        return redirect()->route('buildings.index')->with('success', 'building updated successfully.');
-        
+        if($request->is_active == false){
+            $building->rooms()->update([
+                "is_active" => false 
+            ]);
+
+        }
+
+        else{
+             $building->rooms()->update([
+                "is_active" => true 
+            ]);
+
+        }
+
+        return redirect()->route('admin.buildings.index')->with('success', 'building updated successfully.');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-  
- 
-    public function destroy(string $id){
+
+
+    public function destroy(string $id)
+    {
         $building = Building::findOrFail($id);
         $building->Delete();
-        return redirect()->route('buildings.index')->with('success', 'Deleted Succsusful');
-   
+        return redirect()->route('admin.buildings.index')->with('success', 'Deleted Succsusful');
+
     }
+
+
 }
