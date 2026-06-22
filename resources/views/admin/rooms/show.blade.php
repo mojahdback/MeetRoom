@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Détail Salle</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite('resources/css/app.css')
 </head>
+
 <body class="bg-gray-100 min-h-screen p-8">
 
     <div class="max-w-3xl mx-auto">
 
-        <a href="{{ route('rooms.index') }}" class="text-sm text-gray-400 hover:text-gray-600 mb-6 inline-block">
+        <a href="{{ route('admin.rooms.index') }}" class="text-sm text-gray-400 hover:text-gray-600 mb-6 inline-block">
             ← Retour
         </a>
 
@@ -24,12 +26,13 @@
                 </div>
                 <div class="flex items-center gap-2">
                     @if ($room->is_active)
-                        <span class="bg-green-100 text-green-600 text-xs font-semibold px-2.5 py-1 rounded-full">Active</span>
+                        <span
+                            class="bg-green-100 text-green-600 text-xs font-semibold px-2.5 py-1 rounded-full">Active</span>
                     @else
                         <span class="bg-red-100 text-red-500 text-xs font-semibold px-2.5 py-1 rounded-full">Inactive</span>
                     @endif
-                    <a href="{{ route('rooms.edit', $room) }}"
-                       class="border border-gray-200 text-gray-500 hover:bg-gray-50 text-xs font-medium px-3 py-1.5 rounded-lg">
+                    <a href="{{ route('admin.rooms.edit', $room) }}"
+                        class="border border-gray-200 text-gray-500 hover:bg-gray-50 text-xs font-medium px-3 py-1.5 rounded-lg">
                         Modifier
                     </a>
                 </div>
@@ -52,7 +55,8 @@
             @endif
         </div>
 
-     
+
 
 </body>
+
 </html>

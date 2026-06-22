@@ -11,13 +11,13 @@ use App\Http\Requests\Equipement\UpdateEquipementRequest;
 
 class EquipementController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $equipements = Equipement::all(); 
-        return view('equipements.index', compact('equipements') );   
+        $equipements = Equipement::all();
+        return view('admin.equipements.index', compact('equipements'));
     }
 
     /**
@@ -25,7 +25,7 @@ class EquipementController extends Controller
      */
     public function create()
     {
-       return view('equipements.create');
+        return view('admin.equipements.create');
     }
 
     /**
@@ -35,11 +35,11 @@ class EquipementController extends Controller
     {
         Equipement::create([
             'name' => $request->name,
-            'type' => $request->type ,
+            'type' => $request->type,
             'description' => $request->description
         ]);
 
-        return redirect()->route('equipements.index');
+        return redirect()->route('admin.equipements.index');
     }
 
     /**
@@ -48,34 +48,35 @@ class EquipementController extends Controller
     public function show(string $id)
     {
         $equipement = Equipement::findOrFail($id);
-        return view('equipements.show', compact('equipement') );
+        return view('admin.equipements.show', compact('equipement'));
     }
 
     public function edit(string $id)
     {
         $equipement = Equipement::findOrFail($id);
-        return view('equipements.edit', compact('equipement') );
+        return view('admin.equipements.edit', compact('equipement'));
     }
 
-    
+
     public function update(UpdateEquipementRequest $request, string $id)
     {
         $equipement = Equipement::findOrFail($id);
         $equipement->update([
             'name' => $request->name,
-            'type' => $request->type ,
+            'type' => $request->type,
             'description' => $request->description
         ]);
 
-        return redirect()->route('equipements.index')->with('success', 'equipement updated successfully.');
-        
+        return redirect()->route('admin.equipements.index')->with('success', 'equipement updated successfully.');
+
     }
 
-    public function destroy(string $id){
+    public function destroy(string $id)
+    {
         $equipement = Equipement::findOrFail($id);
         $equipement->Delete();
-        return redirect()->route('equipements.index')->with('success', 'Deleted Succsusful');
-   
+        return redirect()->route('admin.equipements.index')->with('success', 'Deleted Succsusful');
+
     }
-    
+
 }

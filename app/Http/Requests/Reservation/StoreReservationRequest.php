@@ -23,8 +23,8 @@ class StoreReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start_datetime' => ['required', 'date'],
-            'end_datetime' => ['required', 'date', 'after:start_datetime'],
+            // 'start_datetime' => ['required', 'date'],
+            // 'end_datetime' => ['required', 'date', 'after:start_datetime'],
             // 'status' => ['required', 'in:pending,confirmed,cancelled'],
             'notes' => ['nullable', 'string', 'max:300'],
             // 'room_id' => ['required','integer', 'exists:rooms,id'],

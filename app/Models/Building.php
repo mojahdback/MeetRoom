@@ -14,6 +14,12 @@ class Building extends Model
         'name',
         'address',
         'floors_count',
-        'is_active'
+        'is_active',
     ];
+
+    public function rooms(){
+        return $this->hasMany(Room::class);
+
+    }
+    
 }

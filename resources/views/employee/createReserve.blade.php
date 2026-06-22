@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nouvelle Réservation</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite('resources/css/app.css')
 </head>
 
 <body class="bg-gray-100 min-h-screen">
@@ -55,7 +55,7 @@
                 </div>
             @endif
         </div>
-        
+
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul class="mb-0">
@@ -84,20 +84,27 @@
             <form method="POST" action="{{ route('employee.reservations.store', $room->id) }}" class="space-y-5">
                 @csrf
 
+                <div>
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Date</label>
+                    <input type="date" name="date" value="{{ old('date') }}"
+                        class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
+                    @error('date') <p class="text-xs text-red-400 mt-1">{{ $message }}</p> @enderror
+                </div>
+
                 <!-- Date début -->
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Date et heure de début</label>
-                    <input type="datetime-local" name="start_datetime" value="{{ old('start_datetime') }}"
+                    <input type="time" name="start_time" value="{{ old('start_time') }}"
                         class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-                    @error('start_datetime') <p class="text-xs text-red-400 mt-1">{{ $message }}</p> @enderror
+                    @error('start_time') <p class="text-xs text-red-400 mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <!-- Date fin -->
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-1">Date et heure de fin</label>
-                    <input type="datetime-local" name="end_datetime" value="{{ old('end_datetime') }}"
+                    <input type="time" name="end_time" value="{{ old('end_time') }}"
                         class="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100" />
-                    @error('end_datetime') <p class="text-xs text-red-400 mt-1">{{ $message }}</p> @enderror
+                    @error('end_time') <p class="text-xs text-red-400 mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <!-- Notes -->

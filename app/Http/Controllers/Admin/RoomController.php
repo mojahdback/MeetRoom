@@ -13,13 +13,13 @@ use App\Http\Requests\Room\UpdateRoomRequest;
 
 class RoomController extends Controller
 {
-      /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $rooms = Room::all(); 
-        return view('rooms.index', compact('rooms') );   
+        $rooms = Room::all();
+        return view('admin.rooms.index', compact('rooms'));
     }
 
     /**
@@ -27,9 +27,9 @@ class RoomController extends Controller
      */
     public function create()
     {
-      $buildings = Building::all();
-      $equipements = Equipement::all();
-       return view('rooms.create' , compact('buildings','equipements'));
+        $buildings = Building::all();
+        $equipements = Equipement::all();
+        return view('admin.rooms.create', compact('buildings', 'equipements'));
     }
 
     /**
@@ -39,14 +39,14 @@ class RoomController extends Controller
     {
         $room = Room::create([
             'name' => $request->name,
-            'capacity' => $request->capacity ,
+            'capacity' => $request->capacity,
             'floor' => $request->floor,
             'is_active' => $request->is_active,
             'building_id' => $request->building_id,
         ]);
 
         $room->equipements()->attach($request->equipements);
-        return redirect()->route('rooms.index');
+        return redirect()->route('admin.rooms.index');
     }
 
     /**
@@ -54,8 +54,8 @@ class RoomController extends Controller
      */
     public function show(string $id)
     {
-        $room = Room::with(['building' , 'equipements'])->findOrFail($id);
-        return view('rooms.show', compact('room'));
+        $room = Room::with(['building', 'equipements'])->findOrFail($id);
+        return view('admin.rooms.show', compact('room'));
     }
 
     public function edit(string $id)
@@ -63,16 +63,16 @@ class RoomController extends Controller
         $buildings = Building::all();
         $equipements = Equipement::all();
         $room = Room::with(['equipements'])->findOrFail($id);
-        return view('rooms.edit', compact('room' ,'buildings' ,'equipements') );
+        return view('admin.rooms.edit', compact('room', 'buildings', 'equipements'));
     }
 
-    
+
     public function update(UpdateRoomRequest $request, string $id)
     {
         $room = Room::findOrFail($id);
         $room->update([
             'name' => $request->name,
-            'capacity' => $request->capacity ,
+            'capacity' => $request->capacity,
             'floor' => $request->floor,
             'is_active' => $request->is_active,
             'building_id' => $request->building_id,
@@ -80,15 +80,16 @@ class RoomController extends Controller
 
         $room->equipements()->sync($request->equipements ?? []);
 
-        return redirect()->route('rooms.index')->with('success', 'room updated successfully.');
-        
+        return redirect()->route('admin.rooms.index')->with('success', 'room updated successfully.');
+
     }
 
-    public function destroy(string $id){
+    public function destroy(string $id)
+    {
         $room = Room::findOrFail($id);
         $room->equipements()->detach();
         $room->delete();
-        return redirect()->route('rooms.index')->with('success', 'Deleted Succsusful');
-   
+        return redirect()->route('admin.rooms.index')->with('success', 'Deleted Succsusful');
+
     }
 }

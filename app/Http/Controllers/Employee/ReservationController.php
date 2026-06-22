@@ -10,6 +10,7 @@ use App\Models\Equipement;
 use App\Models\Reservation;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
 
 class ReservationController extends Controller
 {
@@ -18,7 +19,7 @@ class ReservationController extends Controller
         $buildings = Building::with('rooms')->has('rooms')->get();
         $equipements = Equipement::with('rooms')->has('rooms')->get();
 
-        $roomsQuery = Room::query()->with([
+        $roomsQuery = Room::query()->where("is_active", true)->with([
             'building',
              'equipements',
              'reservations'
@@ -62,8 +63,8 @@ class ReservationController extends Controller
     public function storeReservation(StoreReservationRequest $request)
     {
         Reservation::create([
-            'start_datetime' => $request->start_datetime,
-            'end_datetime' => $request->end_datetime,
+            'start_datetime' =>   $request->date." " . $request->start_time,
+            'end_datetime' => $request->date ." ". $request->end_time,
             'notes' => $request->notes,
             'room_id' => $request->room_id,
             'user_id' => auth()->id()
@@ -109,6 +110,35 @@ class ReservationController extends Controller
         ]);
 
         return back();
+
+    }
+
+    public function forForbiddenInTheSameTime(Request $request,$id){
+        $room_id = Room::findOrFail($id);
+        $date = $request->date;
+        $startTime = $request->start_time;
+        $endTime = $request->end_time;
+        if($date <=  now()){
+            return back()->with('error',"Invalide start time You should to be less then end time");
+        }
+        if(!Reservation::where("start_datetime",">",now())->where("room_id",$room_id)){
+            // storeReservation
+        }
+        else{
+            if(!Reservation::where("start_datetime", $date)){
+                    // storeReservation
+            }
+            else{
+                if(!Reservation::where("status" , "confirmed")->where("start_datetime", "<=", $startTime)->orWhere("end_datetime", ">=" ,$endTime)){
+                    // storeReservation
+                }
+                else{
+                     return back()->with("error","The booking has been made at this time");
+                }
+            }
+        }
+
+        
 
     }
 

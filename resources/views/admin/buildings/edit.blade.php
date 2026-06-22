@@ -4,13 +4,13 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Modifier Bâtiment</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+ @vite('resources/css/app.css')
 </head>
 <body class="bg-gray-100 min-h-screen p-8">
 
     <div class="max-w-lg mx-auto">
 
-        <a href="{{ route('buildings.index') }}" class="text-sm text-gray-400 hover:text-gray-600 mb-6 inline-block">
+        <a href="{{ route('admin.buildings.index') }}" class="text-sm text-gray-400 hover:text-gray-600 mb-6 inline-block">
             ← Retour
         </a>
 
@@ -18,7 +18,7 @@
 
             <h1 class="text-xl font-bold text-gray-800 mb-6">Modifier le bâtiment</h1>
 
-            <form method="POST" action="{{ route('buildings.update', $building) }}" class="space-y-4">
+            <form method="POST" action="{{ route('admin.buildings.update', $building) }}" class="space-y-4">
                 @csrf
                 @method('PATCH')
 
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="flex gap-3 pt-2">
-                    <a href="{{ route('buildings.index') }}"
+                    <a href="{{ route('admin.buildings.index') }}"
                        class="flex-1 text-center border border-gray-200 rounded-lg py-2.5 text-sm text-gray-500 hover:bg-gray-50">
                         Annuler
                     </a>

@@ -24,7 +24,7 @@ class storeBuildingRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:3|max:30',
-            'address' => 'required|string|min:3|max:30',
+            'address' => 'required|string|min:30|max:255',
             'floors_count' => ['required','integer'],
             'is_active' => 'required|boolean'
         ];

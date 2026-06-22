@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Détail Bâtiment</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite('resources/css/app.css')
 </head>
+
 <body class="bg-gray-100 min-h-screen p-8">
 
     <div class="max-w-3xl mx-auto">
 
-        <a href="{{ route('buildings.index') }}" class="text-sm text-gray-400 hover:text-gray-600 mb-6 inline-block">
+        <a href="{{ route('admin.buildings.index') }}"
+            class="text-sm text-gray-400 hover:text-gray-600 mb-6 inline-block">
             ← Retour
         </a>
 
@@ -24,12 +27,13 @@
                 </div>
                 <div class="flex items-center gap-2">
                     @if ($building->is_active)
-                        <span class="bg-green-100 text-green-600 text-xs font-semibold px-2.5 py-1 rounded-full">Actif</span>
+                        <span
+                            class="bg-green-100 text-green-600 text-xs font-semibold px-2.5 py-1 rounded-full">Actif</span>
                     @else
                         <span class="bg-red-100 text-red-500 text-xs font-semibold px-2.5 py-1 rounded-full">Inactif</span>
                     @endif
-                    <a href="{{ route('buildings.edit', $building) }}"
-                       class="border border-gray-200 text-gray-500 hover:bg-gray-50 text-xs font-medium px-3 py-1.5 rounded-lg">
+                    <a href="{{ route('admin.buildings.edit', $building) }}"
+                        class="border border-gray-200 text-gray-500 hover:bg-gray-50 text-xs font-medium px-3 py-1.5 rounded-lg">
                         Modifier
                     </a>
                 </div>
@@ -40,7 +44,8 @@
         <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
             <div class="flex justify-between items-center px-6 py-4 border-b border-gray-100">
                 <h2 class="font-semibold text-gray-700">Salles</h2>
-                <a href="{{ route('rooms.create') }}" class="text-sm text-blue-500 hover:underline">+ Ajouter une salle</a>
+                <a href="{{ route('admin.rooms.create') }}" class="text-sm text-blue-500 hover:underline">+ Ajouter une
+                    salle</a>
             </div>
             <table class="w-full text-sm">
                 <thead class="bg-gray-50">
@@ -53,20 +58,24 @@
                 </thead>
                 <tbody class="divide-y divide-gray-50">
                     @forelse ($building->rooms as $room)
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-5 py-3 font-medium text-gray-700">{{ $room->name }}</td>
-                        <td class="px-5 py-3 text-gray-500">{{ $room->floor }}</td>
-                        <td class="px-5 py-3 text-gray-500">{{ $room->capacity }} pers.</td>
-                        <td class="px-5 py-3">
-                            @if ($room->is_active)
-                                <span class="bg-green-100 text-green-600 text-xs font-semibold px-2.5 py-0.5 rounded-full">Active</span>
-                            @else
-                                <span class="bg-red-100 text-red-500 text-xs font-semibold px-2.5 py-0.5 rounded-full">Inactive</span>
-                            @endif
-                        </td>
-                    </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-5 py-3 font-medium text-gray-700">{{ $room->name }}</td>
+                            <td class="px-5 py-3 text-gray-500">{{ $room->floor }}</td>
+                            <td class="px-5 py-3 text-gray-500">{{ $room->capacity }} pers.</td>
+                            <td class="px-5 py-3">
+                                @if ($room->is_active)
+                                    <span
+                                        class="bg-green-100 text-green-600 text-xs font-semibold px-2.5 py-0.5 rounded-full">Active</span>
+                                @else
+                                    <span
+                                        class="bg-red-100 text-red-500 text-xs font-semibold px-2.5 py-0.5 rounded-full">Inactive</span>
+                                @endif
+                            </td>
+                        </tr>
                     @empty
-                    <tr><td colspan="4" class="text-center py-8 text-gray-400">Aucune salle.</td></tr>
+                        <tr>
+                            <td colspan="4" class="text-center py-8 text-gray-400">Aucune salle.</td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
@@ -75,4 +84,5 @@
     </div>
 
 </body>
+
 </html>

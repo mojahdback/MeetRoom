@@ -24,7 +24,7 @@ class RoomFactory extends Factory
             'floor' => fake()->numberBetween(1, 4),
             'is_active' => true,
 
-            'building_id' => Building::factory(),
+            'building_id' => Building::pluck('id')->random(),
         ];
     }
 }

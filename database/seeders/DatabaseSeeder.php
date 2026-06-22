@@ -29,9 +29,9 @@ class DatabaseSeeder extends Seeder
          
         User::factory(20)->create();
     
-        Building::factory(3)->create();
+        Building::factory(12)->create();
 
-        Room::factory(3)->create();
+        Room::factory(100)->create();
       
         Equipement::factory(20)->create();
 

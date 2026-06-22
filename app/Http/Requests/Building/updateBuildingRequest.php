@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Building;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,9 +23,9 @@ class updateBuildingRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:3|max:30',
-            'address' => 'required|string|min:3|max:30',
+            'address' => 'required|string|min:30|max:255',
             'floors_count' =>  ['required','integer'],
-            'is_active' => 'required|boolean',
+            'is_active' => 'nullable|boolean',
         ];
     }
 }
