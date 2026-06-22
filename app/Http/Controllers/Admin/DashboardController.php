@@ -30,7 +30,7 @@ class DashboardController extends Controller
             ->groupBy('b.id', 'b.name')
             ->get();
 
-        return response()->json($buildings);
+        return response()->json($buildings); 
 
     }
 
